@@ -2,21 +2,21 @@ package net.ludocrypt.limlib.impl.shader;
 
 import java.util.Set;
 
-import org.quiltmc.qsl.resource.loader.api.reloader.SimpleSynchronousResourceReloader;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
 
-public final class PostProcesserManager implements SimpleSynchronousResourceReloader {
+public final class PostProcesserManager implements ResourceManagerReloadListener {
 
 	public static final PostProcesserManager INSTANCE = new PostProcesserManager();
-	public static final Identifier RESOURCE_KEY = new Identifier("limlib:shaders");
+	public static final ResourceLocation RESOURCE_KEY = new ResourceLocation("limlib:shaders");
 
 	private final Set<PostProcesser> shaders = new ReferenceOpenHashSet<>();
 
-	public PostProcesser find(Identifier location) {
+	public PostProcesser find(ResourceLocation location) {
 		PostProcesser ret = new PostProcesser(location);
 		shaders.add(ret);
 		return ret;
@@ -29,10 +29,10 @@ public final class PostProcesserManager implements SimpleSynchronousResourceRelo
 			for (PostProcesser shader : shaders) {
 
 				if (shader.isInitialized()) {
-					MinecraftClient client = MinecraftClient.getInstance();
+					Minecraft client = Minecraft.getInstance();
 					shader.shader
-						.setupDimensions(client.getWindow().getFramebufferWidth(),
-							client.getWindow().getFramebufferHeight());
+						.resize(client.getWindow().getWidth(),
+							client.getWindow().getHeight());
 				}
 
 			}
@@ -41,12 +41,10 @@ public final class PostProcesserManager implements SimpleSynchronousResourceRelo
 
 	}
 
-	@Override
-	public Identifier getQuiltId() {
+	public ResourceLocation getQuiltId() {
 		return RESOURCE_KEY;
 	}
 
-	@Override
 	public void reload(ResourceManager mgr) {
 
 		for (PostProcesser shader : shaders) {
@@ -60,4 +58,8 @@ public final class PostProcesserManager implements SimpleSynchronousResourceRelo
 		shaders.remove(shader);
 	}
 
+	@Override
+	public void onResourceManagerReload(ResourceManager resourceManager) {
+
+	}
 }

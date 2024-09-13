@@ -1,13 +1,14 @@
 package net.ludocrypt.limlib.impl.bridge;
 
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLLoader;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.quiltmc.loader.api.QuiltLoader;
-
 public class IrisBridge {
 
-	public static final boolean IRIS_LOADED = QuiltLoader.isModLoaded("iris");
+	public static final boolean IRIS_LOADED = ModList.get().isLoaded("oculus");
 
 	public static boolean areShadersInUse() {
 

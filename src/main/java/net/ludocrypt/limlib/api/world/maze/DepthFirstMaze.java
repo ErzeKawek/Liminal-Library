@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.RandomSource;
 
 public class DepthFirstMaze extends DepthLikeMaze {
 
-	public RandomGenerator random;
+	public RandomSource random;
 
-	public DepthFirstMaze(int width, int height, RandomGenerator RandomGenerator) {
+	public DepthFirstMaze(int width, int height, RandomSource RandomGenerator) {
 		super(width, height);
 		this.random = RandomGenerator;
 	}

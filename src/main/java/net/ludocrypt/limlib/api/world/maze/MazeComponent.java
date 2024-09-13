@@ -5,10 +5,9 @@ import java.util.Objects;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 public abstract class MazeComponent {
 
 	public final int width;
@@ -94,13 +93,7 @@ public abstract class MazeComponent {
 	/**
 	 * Describes the state of a particular room or 'cell' in a maze
 	 * <p>
-	 * 
-	 * @param up       has wall up open
-	 * @param right    has right wall open
-	 * @param down     has wall down open
-	 * @param left     has left wall open
-	 * @param extra    information appended to this state
-	 * @param position inside the maze
+	 *
 	 **/
 	public static class CellState {
 
@@ -109,7 +102,7 @@ public abstract class MazeComponent {
 		private boolean right = false;
 		private boolean down = false;
 		private boolean left = false;
-		private Map<String, NbtCompound> extra = Maps.newHashMap();
+		private Map<String, CompoundTag> extra = Maps.newHashMap();
 
 		public CellState copy() {
 			CellState newState = new CellState();
@@ -177,11 +170,11 @@ public abstract class MazeComponent {
 			this.left = left;
 		}
 
-		public void append(String name, NbtCompound data) {
+		public void append(String name, CompoundTag data) {
 			this.extra.put(name, data);
 		}
 
-		public void appendAll(Map<String, NbtCompound> data) {
+		public void appendAll(Map<String, CompoundTag> data) {
 			this.extra.putAll(data);
 		}
 
@@ -218,7 +211,7 @@ public abstract class MazeComponent {
 			};
 		}
 
-		public Map<String, NbtCompound> getExtra() {
+		public Map<String, CompoundTag> getExtra() {
 			return extra;
 		}
 

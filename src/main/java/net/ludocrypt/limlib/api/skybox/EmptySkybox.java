@@ -1,5 +1,6 @@
 package net.ludocrypt.limlib.api.skybox;
 
+import net.minecraft.client.Minecraft;
 import org.joml.Matrix4f;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
@@ -17,8 +18,8 @@ public class EmptySkybox extends Skybox {
 
 	@Override
 	@ClientOnly
-	public void renderSky(WorldRenderer worldRenderer, MinecraftClient client, MatrixStack matrices,
-			Matrix4f projectionMatrix, float tickDelta) {
+	public void renderSky(WorldRenderer worldRenderer, Minecraft client, MatrixStack matrices,
+						  Matrix4f projectionMatrix, float tickDelta) {
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import net.minecraft.nbt.CompoundTag;
 import org.apache.logging.log4j.util.TriConsumer;
 
 import com.mojang.datafixers.util.Pair;
@@ -39,8 +40,8 @@ import net.minecraft.world.ChunkRegion;
 
 public class NbtPlacerUtil {
 
-	public final NbtCompound storedNbt;
-	public final HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>> positions;
+	public final CompoundTag storedNbt;
+	public final HashMap<BlockPos, Pair<BlockState, Optional<CompoundTag>>> positions;
 	public final NbtList entities;
 	public final BlockPos lowestPos;
 	public final int sizeX;
@@ -48,7 +49,7 @@ public class NbtPlacerUtil {
 	public final int sizeZ;
 	public final Vec3i sizeVector;
 
-	public NbtPlacerUtil(NbtCompound storedNbt, HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>> positions,
+	public NbtPlacerUtil(CompoundTag storedNbt, HashMap<BlockPos, Pair<BlockState, Optional<CompoundTag>>> positions,
 			NbtList entities, BlockPos lowestPos, int sizeX, int sizeY, int sizeZ) {
 		this.storedNbt = storedNbt;
 		this.positions = positions;
@@ -60,7 +61,7 @@ public class NbtPlacerUtil {
 		this.sizeVector = new Vec3i(sizeX, sizeY, sizeZ);
 	}
 
-	public NbtPlacerUtil(NbtCompound storedNbt, HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>> positions,
+	public NbtPlacerUtil(CompoundTag storedNbt, HashMap<BlockPos, Pair<BlockState, Optional<CompoundTag>>> positions,
 			NbtList entities, BlockPos lowestPos, BlockPos sizePos) {
 		this(storedNbt, positions, entities, lowestPos, sizePos.getX(), sizePos.getY(), sizePos.getZ());
 	}
@@ -68,10 +69,10 @@ public class NbtPlacerUtil {
 	public NbtPlacerUtil manipulate(Manipulation manipulation) {
 		NbtList paletteList = storedNbt.getList("palette", 10);
 		HashMap<Integer, BlockState> palette = new HashMap<Integer, BlockState>(paletteList.size());
-		List<NbtCompound> paletteCompoundList = paletteList
+		List<CompoundTag> paletteCompoundList = paletteList
 			.stream()
-			.filter(nbtElement -> nbtElement instanceof NbtCompound)
-			.map(element -> (NbtCompound) element)
+			.filter(nbtElement -> nbtElement instanceof CompoundTag)
+			.map(element -> (CompoundTag) element)
 			.toList();
 
 		for (int i = 0; i < paletteCompoundList.size(); i++) {

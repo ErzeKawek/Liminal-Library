@@ -2,6 +2,12 @@ package net.ludocrypt.limlib.impl.debug.mixin;
 
 import java.util.concurrent.CompletableFuture;
 
+import net.minecraft.core.Registry;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.WorldPresetTagsProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,11 +24,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.WorldPresetTags;
 
-@Mixin(WorldPresetTagProvider.class)
-public abstract class WorldPresetTagProviderMixin extends AbstractTagProvider<GeneratorType> {
+@Mixin(WorldPresetTagsProvider.class)
+public abstract class WorldPresetTagProviderMixin extends TagsProvider<WorldPreset> {
 
-	protected WorldPresetTagProviderMixin(DataPackOutput output, RegistryKey<? extends Registry<GeneratorType>> key,
-			CompletableFuture<Provider> lookupProvider) {
+	protected WorldPresetTagProviderMixin(PackOutput output, ResourceKey<? extends Registry<WorldPreset>> key,
+										  CompletableFuture<Provider> lookupProvider) {
 		super(output, key, lookupProvider);
 	}
 
